@@ -35,6 +35,9 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.picMain = new System.Windows.Forms.PictureBox();
             this.pnlRight = new System.Windows.Forms.Panel();
+            this.cmb = new System.Windows.Forms.ComboBox();
+            this.btnOver = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.tb = new System.Windows.Forms.TrackBar();
             this.btnOk = new System.Windows.Forms.Button();
@@ -114,6 +117,9 @@
             // 
             // pnlRight
             // 
+            this.pnlRight.Controls.Add(this.cmb);
+            this.pnlRight.Controls.Add(this.btnOver);
+            this.pnlRight.Controls.Add(this.btnStop);
             this.pnlRight.Controls.Add(this.btnSave);
             this.pnlRight.Controls.Add(this.tb);
             this.pnlRight.Controls.Add(this.btnOk);
@@ -125,32 +131,60 @@
             this.pnlRight.Size = new System.Drawing.Size(118, 805);
             this.pnlRight.TabIndex = 1;
             // 
+            // cmb
+            // 
+            this.cmb.FormattingEnabled = true;
+            this.cmb.Location = new System.Drawing.Point(23, 135);
+            this.cmb.Name = "cmb";
+            this.cmb.Size = new System.Drawing.Size(75, 21);
+            this.cmb.TabIndex = 7;
+            // 
+            // btnOver
+            // 
+            this.btnOver.Location = new System.Drawing.Point(23, 463);
+            this.btnOver.Name = "btnOver";
+            this.btnOver.Size = new System.Drawing.Size(75, 23);
+            this.btnOver.TabIndex = 6;
+            this.btnOver.Text = "立即停止";
+            this.btnOver.UseVisualStyleBackColor = true;
+            this.btnOver.Click += new System.EventHandler(this.btnOver_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(23, 434);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 5;
+            this.btnStop.Text = "延迟停止";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(20, 406);
+            this.btnSave.Enabled = false;
+            this.btnSave.Location = new System.Drawing.Point(23, 492);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            this.btnSave.Enabled = false;
             // 
             // tb
             // 
-            this.tb.Location = new System.Drawing.Point(30, 134);
-            this.tb.Maximum = 100;
-            this.tb.Minimum = 10;
+            this.tb.Location = new System.Drawing.Point(33, 162);
+            this.tb.Maximum = 50;
+            this.tb.Minimum = 5;
             this.tb.Name = "tb";
             this.tb.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.tb.Size = new System.Drawing.Size(45, 237);
             this.tb.TabIndex = 3;
             this.tb.TickFrequency = 2;
-            this.tb.Value = 60;
+            this.tb.Value = 30;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(20, 377);
+            this.btnOk.Location = new System.Drawing.Point(23, 405);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -160,7 +194,7 @@
             // 
             // btnSelectSourcePic
             // 
-            this.btnSelectSourcePic.Location = new System.Drawing.Point(20, 105);
+            this.btnSelectSourcePic.Location = new System.Drawing.Point(23, 106);
             this.btnSelectSourcePic.Name = "btnSelectSourcePic";
             this.btnSelectSourcePic.Size = new System.Drawing.Size(75, 23);
             this.btnSelectSourcePic.TabIndex = 1;
@@ -170,7 +204,7 @@
             // 
             // btnSelectMainPic
             // 
-            this.btnSelectMainPic.Location = new System.Drawing.Point(20, 69);
+            this.btnSelectMainPic.Location = new System.Drawing.Point(23, 77);
             this.btnSelectMainPic.Name = "btnSelectMainPic";
             this.btnSelectMainPic.Size = new System.Drawing.Size(75, 23);
             this.btnSelectMainPic.TabIndex = 0;
@@ -223,6 +257,9 @@
         private System.Windows.Forms.PictureBox picMain;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.OpenFileDialog ofd;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnOver;
+        private System.Windows.Forms.ComboBox cmb;
     }
 }
 

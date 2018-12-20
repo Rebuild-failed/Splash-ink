@@ -63,6 +63,16 @@ namespace Splash_ink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mainpic {
+            get {
+                object obj = ResourceManager.GetObject("mainpic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sourcepic {
             get {
                 object obj = ResourceManager.GetObject("sourcepic", resourceCulture);

@@ -16,10 +16,21 @@ namespace Splash_ink
         public Scene()
         {
             InitializeComponent();
+            InitType();
+        }
+
+        private void InitType()
+        {
+            foreach(Painter.PaintType pt in Enum.GetValues(typeof(Painter.PaintType)))
+            {
+                this.cmb.Items.Add(pt.ToString());
+            }
+            this.cmb.SelectedIndex = 0;
         }
 
         private void Scene_Load(object sender, EventArgs e)
         {
+            this.picMain.Image = global::Splash_ink.Properties.Resources.mainpic;
             this.picSource.Image = global::Splash_ink.Properties.Resources.sourcepic;
         }
 
@@ -28,9 +39,20 @@ namespace Splash_ink
             this.SetControlStatus(false);
 
             painter = new Painter(picMain, picSource, this.tb.Value);
-            painter.Paint();
+            painter.Paint(this.cmb.Text);
 
             this.SetControlStatus(true);
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            painter.CanPinter = false;
+            this.SetControlStatus(true);
+            this.btnStop.Enabled = false;
+        }
+        private void btnOver_Click(object sender, EventArgs e)
+        {
+            painter.OverPinting = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -63,6 +85,7 @@ namespace Splash_ink
         {
             this.btnOk.Enabled = state;
             this.btnSave.Enabled = state;
+            this.btnStop.Enabled = state;
             this.btnSelectMainPic.Enabled = state;
             this.btnSelectSourcePic.Enabled = state;
         }

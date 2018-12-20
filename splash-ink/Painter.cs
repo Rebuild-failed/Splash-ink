@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,29 +20,53 @@ namespace Splash_ink
         Bitmap btSource;
         SolidBrush brush = new SolidBrush(Color.Black);
         Random ra = new Random();
+        int pointMinSize = 2;
+        int pointSize;
 
-        int pointMaxSize;
+        public Boolean CanPinter = true;
+        public Boolean OverPinting = false;
+
+        public enum PaintType
+        {
+            Tile,
+            Roller,
+            Raindrop,
+            Splash
+        }
 
         private InkPoint RandomPoint
         {
-            get => new InkPoint(new Point(ra.Next(picMain.Size.Width), ra.Next(picMain.Size.Height)), ra.Next(pointMaxSize));
+            get => new InkPoint(new Point(ra.Next(picMain.Size.Width), ra.Next(picMain.Size.Height)), ra.Next(pointMinSize,pointSize));
         }
 
         public Painter(PictureBox pb1, PictureBox pb2, int gr)
         {
             picMain = pb1;
             picSource = pb2;
-            pointMaxSize = gr;
+            pointSize = gr;
             btMain = new Bitmap(picMain.Size.Width, picMain.Size.Height);
             btSource = new Bitmap(picSource.Size.Width, picSource.Size.Height);
             picMain.DrawToBitmap(btMain, new Rectangle(0, 0, picMain.Width, picMain.Height));
             picSource.DrawToBitmap(btSource, new Rectangle(0, 0, picSource.Width, picSource.Height));
         }
 
-        public void Paint()
+        public void Paint(String type)
         {
-            //Splash();
-            DrawMainImage();
+            switch(Enum.Parse(typeof(PaintType), type))
+            {
+                case PaintType.Tile:
+                    new Thread(Tile).Start();
+                    break;
+                case PaintType.Roller:
+                    new Thread(Roller).Start();
+                    break;
+                case PaintType.Raindrop:
+                    new Thread(Raindrop).Start();
+                    break;
+                case PaintType.Splash:
+                    new Thread(Splash).Start();
+                    break;
+            }
         }
 
         public Boolean Save()
@@ -61,18 +86,69 @@ namespace Splash_ink
             }
         }
 
-        private void Splash()
+        private void Tile()
         {
             Graphics graphics = picMain.CreateGraphics();
             Graphics bg = Graphics.FromImage(btMain);
-            for (int alpha = 100; alpha > 0; alpha--)
+            for (int alpha = 20; alpha < 50; alpha++)
             {
-                for (int i = 0; i < 100; i++)
+                if (!CanPinter) return;
+                for (int x = 0; x < picMain.Width; x++)
                 {
-                    GenerateRandomPoint(bg, alpha);
+                    if (OverPinting) return;
+                    for (int y = 0; y < picMain.Height; y++)
+                    {
+                        brush.Color = GetColor(new Point(x, y), alpha);
+                        bg.FillEllipse(brush, new Rectangle(x, y, pointMinSize, pointMinSize));
+                    }
+                    graphics.DrawImage(btMain, new Point(0, 0));
                 }
-                graphics.DrawImage(btMain, new Point(0, 0));
             }
+        }
+
+        private void Roller()
+        {
+            Graphics graphics = picMain.CreateGraphics();
+            Graphics bg = Graphics.FromImage(btMain);
+            for (int alpha = 20; alpha < 50; alpha++)
+            {
+                if (!CanPinter) return;
+                pointSize = pointSize > pointMinSize ? pointSize - 3 : pointMinSize;
+                for (int x = 0; x < picMain.Width; x++)
+                {
+                    if (OverPinting) return;
+                    for (int y = 0; y < picMain.Height; y++)
+                    {
+                        brush.Color = GetColor(new Point(x, y), 255);
+                        bg.FillEllipse(brush, new Rectangle(x, y, pointSize, pointSize));
+                    }
+                    graphics.DrawImage(btMain, new Point(0, 0));
+                }
+            }
+        }
+
+        private void Raindrop()
+        {
+            Graphics graphics = picMain.CreateGraphics();
+            Graphics bg = Graphics.FromImage(btMain);
+            while (pointSize >= pointMinSize)
+            {
+                for (int i = 0; i < 1000; i++)
+                {
+                    if (!CanPinter || OverPinting) return;
+                    for (int alpha = 20; alpha < 50; alpha++)
+                    {
+                        GenerateRandomPoint(bg, alpha);
+                    }
+                    graphics.DrawImage(btMain, new Point(0, 0));
+                }
+                pointSize -= 2;
+            }
+        }
+
+        private void Splash()
+        {
+
         }
 
         private void DrawMainImage()
