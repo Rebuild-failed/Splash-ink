@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
+using System.Threading;
 
 namespace Splash_ink
 {
     public partial class Scene : Form
     {
         Painter painter;
+
         public Scene()
         {
             InitializeComponent();
@@ -32,6 +36,16 @@ namespace Splash_ink
         {
             this.picMain.Image = global::Splash_ink.Properties.Resources.mainpic;
             this.picSource.Image = global::Splash_ink.Properties.Resources.sourcepic;
+        }
+
+        private void btnCutMainPicture_Click(object sender, EventArgs e)
+        {
+            SetScreenshot(this.picMain);
+        }
+
+        private void btnCutSourcePicture_Click(object sender, EventArgs e)
+        {
+            SetScreenshot(this.picSource);
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -88,6 +102,16 @@ namespace Splash_ink
             this.btnStop.Enabled = state;
             this.btnSelectMainPic.Enabled = state;
             this.btnSelectSourcePic.Enabled = state;
+        }
+
+        private void SetScreenshot(PictureBox pictureBox)
+        {
+            this.Hide();
+            Thread.Sleep(200);
+            Screenshot screenshot = new Screenshot(pictureBox);
+            screenshot.Cut();
+            this.Show();
+            screenshot.Dispose();
         }
     }
 }

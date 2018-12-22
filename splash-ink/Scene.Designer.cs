@@ -35,6 +35,8 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.picMain = new System.Windows.Forms.PictureBox();
             this.pnlRight = new System.Windows.Forms.Panel();
+            this.btnCutSourcePicture = new System.Windows.Forms.Button();
+            this.btnCutMainPicture = new System.Windows.Forms.Button();
             this.cmb = new System.Windows.Forms.ComboBox();
             this.btnOver = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
@@ -117,6 +119,8 @@
             // 
             // pnlRight
             // 
+            this.pnlRight.Controls.Add(this.btnCutSourcePicture);
+            this.pnlRight.Controls.Add(this.btnCutMainPicture);
             this.pnlRight.Controls.Add(this.cmb);
             this.pnlRight.Controls.Add(this.btnOver);
             this.pnlRight.Controls.Add(this.btnStop);
@@ -130,6 +134,26 @@
             this.pnlRight.Name = "pnlRight";
             this.pnlRight.Size = new System.Drawing.Size(118, 805);
             this.pnlRight.TabIndex = 1;
+            // 
+            // btnCutSourcePicture
+            // 
+            this.btnCutSourcePicture.Location = new System.Drawing.Point(23, 48);
+            this.btnCutSourcePicture.Name = "btnCutSourcePicture";
+            this.btnCutSourcePicture.Size = new System.Drawing.Size(75, 23);
+            this.btnCutSourcePicture.TabIndex = 9;
+            this.btnCutSourcePicture.Text = "截取色源图";
+            this.btnCutSourcePicture.UseVisualStyleBackColor = true;
+            this.btnCutSourcePicture.Click += new System.EventHandler(this.btnCutSourcePicture_Click);
+            // 
+            // btnCutMainPicture
+            // 
+            this.btnCutMainPicture.Location = new System.Drawing.Point(23, 19);
+            this.btnCutMainPicture.Name = "btnCutMainPicture";
+            this.btnCutMainPicture.Size = new System.Drawing.Size(75, 23);
+            this.btnCutMainPicture.TabIndex = 8;
+            this.btnCutMainPicture.Text = "截取主图片";
+            this.btnCutMainPicture.UseVisualStyleBackColor = true;
+            this.btnCutMainPicture.Click += new System.EventHandler(this.btnCutMainPicture_Click);
             // 
             // cmb
             // 
@@ -253,13 +277,15 @@
         private System.Windows.Forms.Button btnSelectMainPic;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.TrackBar tb;
-        private System.Windows.Forms.PictureBox picSource;
-        private System.Windows.Forms.PictureBox picMain;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.OpenFileDialog ofd;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnOver;
         private System.Windows.Forms.ComboBox cmb;
+        private System.Windows.Forms.Button btnCutSourcePicture;
+        private System.Windows.Forms.Button btnCutMainPicture;
+        public System.Windows.Forms.PictureBox picSource;
+        public System.Windows.Forms.PictureBox picMain;
     }
 }
 
