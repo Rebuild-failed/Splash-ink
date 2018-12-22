@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -25,6 +26,8 @@ namespace Splash_ink
 
         public Boolean CanPinter = true;
         public Boolean OverPinting = false;
+
+        private String CurrentPaintType;
 
         public enum PaintType
         {
@@ -50,23 +53,17 @@ namespace Splash_ink
             picSource.DrawToBitmap(btSource, new Rectangle(0, 0, picSource.Width, picSource.Height));
         }
 
-        public void Paint(String type)
+        public void Paint(PaintType paintType)
         {
-            switch(Enum.Parse(typeof(PaintType), type))
-            {
-                case PaintType.Tile:
-                    new Thread(Tile).Start();
-                    break;
-                case PaintType.Roller:
-                    new Thread(Roller).Start();
-                    break;
-                case PaintType.Raindrop:
-                    new Thread(Raindrop).Start();
-                    break;
-                case PaintType.Splash:
-                    new Thread(Splash).Start();
-                    break;
-            }
+            CurrentPaintType = paintType.ToString();
+            Thread th = new Thread(Paint);
+            th.Start();
+        }
+
+        private void Paint()
+        {
+            Type painter = typeof(Painter);
+            painter.GetMethod(CurrentPaintType, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, null);
         }
 
         public Boolean Save()

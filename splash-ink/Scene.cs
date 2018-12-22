@@ -23,7 +23,7 @@ namespace Splash_ink
         {
             foreach(Painter.PaintType pt in Enum.GetValues(typeof(Painter.PaintType)))
             {
-                this.cmb.Items.Add(pt.ToString());
+                this.cmb.Items.Add(pt);
             }
             this.cmb.SelectedIndex = 0;
         }
@@ -39,7 +39,7 @@ namespace Splash_ink
             this.SetControlStatus(false);
 
             painter = new Painter(picMain, picSource, this.tb.Value);
-            painter.Paint(this.cmb.Text);
+            painter.Paint((Painter.PaintType)this.cmb.SelectedItem);
 
             this.SetControlStatus(true);
         }
